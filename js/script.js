@@ -1,52 +1,46 @@
-
 // let randomNumber = Math.random(1,2,3);
 let userChoice;
 // rock = 1;
 // scissor = 2;
 // paper = 3;
 let userChoiceNum;
-let computerChoice;
 // In your click handler, generate a random number and assign it to the randomNumber variable
 
-$(".play").click(function() {
+function getRandomComputerChoice() {
   let randomNumber = Math.ceil(Math.random() * 3);
-  let userInput = $("input").val().toLowerCase();
-  
-
-  if (userInput === "rock") {
-     userChoiceNum = 1;
-  } else if (userInput === "scissor") {
-    userChoiceNum = 2;
-  } else if (userInput === "paper") {
-    userChoiceNum = 3;
-  } 
-  $(".userChoice").text(userInput);
-  
-    if (randomNumber === 1) {
-     computerChoice = "rock";
+  if (randomNumber === 1) {
+    return "rock";
   } else if (randomNumber === 2) {
-    computerChoice = "scissor";
+    return "scissor";
   } else if (randomNumber === 3) {
-    computerChoice = "paper";
-  } 
-  $(".computerChoice").text(computerChoice);
-  
-  //condition for rules
-   if (userChoiceNum === randomNumber) {
-    $(".result").text('Draw');
-  } else if (userChoiceNum === 2 && randomNumber === 3) {
-  $(".result").text('User Wins');
-  }else if (userChoiceNum === 1 && randomNumber === 2) {
-    $(".result").text('User Wins');
-  } else if (userChoiceNum === 3 && randomNumber === 1) {
-    $(".result").text('User Wins');
-  }else if (userChoiceNum === 2 && randomNumber === 1) {
-    $(".result").text('Computer Wins');
-  }else if (userChoiceNum === 1 && randomNumber === 3) {
-    $(".result").text('Computer Wins');
-  } else if (userChoiceNum === 3 && randomNumber === 2) {
-    $(".result").text('Computer Wins');
+    return "paper";
   }
-  
-  
-});  
+}
+
+function getWinner(userInput, computerChoice) {
+  if (userInput === computerChoice) {
+    return 'Draw';
+  } else if (userInput === "scissor" && computerChoice === "paper") {
+    return "User Wins";
+  } else if (userInput === "rock" && computerChoice === "scissor") {
+    return "User Wins";
+  } else if (userInput === "paper" && computerChoice === "rock") {
+    return "User Wins";
+  } else if (userInput === "scissor" && computerChoice === "rock") {
+    return "Computer Wins";
+  } else if (userInput === "rock" && computerChoice === "paper") {
+    return "Computer Wins";
+  } else if (userInput === "paper" && computerChoice === "scissor") {
+    return "Computer Wins";
+  }
+}
+
+$(".play").click(function () {
+  let userInput = $("input").val().toLowerCase();
+  $(".userChoice").text(userInput);
+  let computerChoice = getRandomComputerChoice();
+  $(".computerChoice").text(computerChoice);
+  let winner = getWinner(userInput, computerChoice);
+    $(".result").text(winner);
+
+});
